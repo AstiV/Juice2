@@ -32,7 +32,7 @@ class DragNDrop extends React.Component {
             const currentAcceptFile = acceptedFiles[0];
             const currentAcceptFileType = currentAcceptFile.type;
             if (currentAcceptFileType != "application/pdf") {
-                alert("Dies ist keine PDF Datei");
+                alert("This is not a PDF");
                 return false;
             }
         }
