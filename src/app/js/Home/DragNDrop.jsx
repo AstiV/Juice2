@@ -9,20 +9,23 @@ class DragNDrop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageSource: null
+            sendFiles: [],
+            previewFiles: []
         };
     }
 
     render() {
-        const { imageSource } = this.state;
         return (
             <div>
-                {imageSource !== null ? <img src={imageSource} /> : ""}
                 <Dropzone accept={acceptedFileType} onDrop={this._handleOnDrop}>
                     <br />
-                    <span>Drop your PDF here!</span>
+                    <span>Drop your PDF files here!</span>
                 </Dropzone>
-                {/* <Image publicId="gxhyfftrqogxjf7yupuo.jpg" /> */}
+                <br />
+                <div>
+                    Your uploaded files are:
+                    {this.state.previewFiles}
+                </div>
             </div>
         );
     }
@@ -43,6 +46,8 @@ class DragNDrop extends React.Component {
         console.log("Accepted ", acceptedFiles);
         console.log("Rejected ", rejectedFiles);
 
+        console.log("Accepted files: ", acceptedFiles[0].name);
+
         if (rejectedFiles && rejectedFiles.length > 0) {
             this._verifyFile(rejectedFiles);
         }
@@ -50,9 +55,15 @@ class DragNDrop extends React.Component {
         if (acceptedFiles && acceptedFiles.length > 0) {
             const isVeryfied = this._verifyFile(acceptedFiles);
             if (isVeryfied) {
-                /* get Base64 Data */
-                const currentAcceptFile = acceptedFiles[0];
-                const reader = new FileReader();
+                const sendFiles = this.state.sendFiles;
+                sendFiles.push(acceptedFiles);
+                const previewFiles = sendFiles.map(function(file) {
+                    return <div>{file[0].name}</div>;
+                });
+
+                console.log("PREVIEW FILES ARRAY", previewFiles);
+
+                this.setState({ sendFiles, previewFiles });
             }
         }
     };
