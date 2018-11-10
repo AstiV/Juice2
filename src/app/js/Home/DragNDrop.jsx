@@ -57,9 +57,9 @@ class DragNDrop extends React.Component {
             if (isVeryfied) {
                 const sendFiles = this.state.sendFiles;
                 sendFiles.push(acceptedFiles);
-                const previewFiles = sendFiles.map(function(file) {
-                    return <div>{file[0].name}</div>;
-                });
+                const previewFiles = sendFiles.map((file, index) => (
+                    <div key={index}>{file[0].name}</div>
+                ));
 
                 console.log("PREVIEW FILES ARRAY", previewFiles);
 
