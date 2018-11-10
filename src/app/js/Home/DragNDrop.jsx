@@ -26,6 +26,9 @@ class DragNDrop extends React.Component {
                     Your uploaded files are:
                     {this.state.previewFiles}
                 </div>
+                <button className="button" onClick={this._handleOnClick}>
+                    Upload
+                </button>
             </div>
         );
     }
@@ -67,6 +70,24 @@ class DragNDrop extends React.Component {
             }
         }
     };
+
+    // _handleOnClick = () => {
+    //     api.post(
+    //         `/api/auth/sign-${type}`,
+    //         { email: this.state.email, password: this.state.password },
+    //         pictureDeclaration
+    //     )
+    //         .then(data => {
+    //             localStorage.setItem('identity', data.token)
+    //             this.props.setUser()
+    //             this.props.history.push('/')
+    //         })
+    //         .catch(err => {
+    //             this.setState({
+    //                 error: err.description,
+    //             })
+    //         })
+    // };
 }
 
 export default DragNDrop;
