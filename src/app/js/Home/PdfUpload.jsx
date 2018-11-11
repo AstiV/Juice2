@@ -35,12 +35,13 @@ class PdfUpload extends Component {
                     className="input"
                     placeholder="PDF"
                 />
-
+                <br />
                 <Document file={pdf} onLoadSuccess={this.onDocumentLoadSuccess} options={options}>
                     {Array.from(new Array(numPages), (el, index) => (
                         <Page key={`page_${index + 1}`} pageNumber={index + 1} />
                     ))}
                 </Document>
+                <br />
                 <button onClick={this._handleSubmit}>SUBMIT</button>
             </div>
         );
