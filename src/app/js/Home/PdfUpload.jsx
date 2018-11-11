@@ -53,12 +53,18 @@ class PdfUpload extends Component {
         });
     }
 
-    _handleSubmit() {
-        api.post("/api/pdf/new", {
-            pdf: this.state.pdf
-        })
+    _handleSubmit(e) {
+        e.preventDefault();
+        const data = { ...this.state };
+        delete data.pdf;
+
+        const pdfs = this.state.pdf ? { pdf: this.state.pdf } : undefined;
+
+        api.post("/api/pdf/new", pdfs)
             .then(result => {
                 console.log(result);
+                localStorage.setItem("identity", result.token);
+                this.props.setUser();
             })
             .catch(err => {
                 console.log(err.description);

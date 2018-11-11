@@ -1,40 +1,39 @@
 const express = require("express");
 const router = express.Router();
 
+const User = require("../../models/User");
+
 const { checkLoggedIn } = require("../../utils/middleware");
+const jwt = require("jsonwebtoken");
 
 const config = require("../../config");
 const upload = require("../../utils/upload");
 
-router.post("/new", (req, res) => {
-    const uploadedFiles = req.body;
-    console.log("Variable whatever: ", uploadedFiles);
-    console.log("REQ. BODY. PDF ", req.body.pdf);
-    console.log("REQ FILES ", req.files);
+router.post("/new", checkLoggedIn, (req, res) => {
+    // const uploadedFiles = req.body;
+    // console.log("Variable whatever: ", uploadedFiles);
+    // console.log("REQ. BODY. PDF ", req.body.pdf);
+    // console.log("REQ FILES ", req.files);
+    const p = req.files && req.files.pdf ? upload(req.files.pdf) : Promise.resolve(undefined);
+    p.then(fileUrl => {
+        const updateData = {};
+        if (fileUrl) updateData.pdf = fileUrl;
 
-    // const singleFile = uploadedFiles.map((file, index) =>
-    //     console.log("All FILES LOGGED IN THE BACK TOO ", file(index))
-    // );
+        return User.findByIdAndUpdate(req.user._id, updateData, { new: true });
+    })
+        .then(user => {
+            const jsonUser = user.toObject();
+            delete jsonUser.password;
+            console.log(jsonUser);
+            const token = jwt.sign(jsonUser, config.SECRET_JWT_PASSPHRASE);
 
-    // if (!email || !password) res.status(400).send({ error: "Missing Credentials." });
-
-    // User.findOne({ email })
-    //     .then(existingUser => {
-    //         if (existingUser) return res.status(400).send({ error: "E-Mail exists already." });
-
-    //         return req.files && req.files.picture ? upload(req.files.picture) : Promise.resolve();
-    //     })
-    //     .then(pictureUrl => {
-    //         const hashedPassword = bcrypt.hashSync(password, 10);
-    //         return new User({ email, password: hashedPassword, profilePicture: pictureUrl }).save();
-    //     })
-    //     .then(user => {
-    //         const token = jwt.sign(
-    //             { _id: user._id, email: user.email, profilePicture: user.profilePicture },
-    //             config.SECRET_JWT_PASSPHRASE
-    //         );
-    //         res.send({ token });
-    //     });
+            res.send({ token });
+        })
+        .catch(err => {
+            console.error(err);
+        });
 });
+
+
 
 module.exports = router;
