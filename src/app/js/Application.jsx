@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
@@ -8,7 +7,7 @@ import Home from "./Home/Home";
 import Navigation from "./Navigation";
 import Profile from "./Profile";
 import NotFound from "./NotFound";
-import api from "./utils/api";
+import DragNDrop from "./Home/DragNDrop";
 
 class Application extends React.Component {
     constructor(props) {
@@ -33,6 +32,7 @@ class Application extends React.Component {
                     <Navigation user={this.state.user} />
                     <Switch>
                         <Route exact path="/" render={() => <Home user={this.state.user} />} />
+                        {/* <Route exact path="/pdf" render={() => <DragNDrop />} /> */}
                         <Route exact path="/profile" render={() => <Profile user={this.state.user} />} />
                         <Route
                             path="/auth"
