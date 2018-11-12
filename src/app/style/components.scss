@@ -62,3 +62,14 @@
         color: lighten($primary-color, 8%);
     }
 }
+
+.profilePicture img {
+    width: 10rem;
+    border-radius: 50%;
+}
+
+.document {
+    border-radius: 3px;
+    box-shadow: 0 5px 40px -5px rgba(0, 0, 0, 0.3);
+    width: 62%;
+}

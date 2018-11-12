@@ -36,15 +36,25 @@ class PdfUpload extends Component {
                     placeholder="PDF"
                 />
                 <br />
-                {this.state.pdf && (
-                    <Document file={pdf} onLoadSuccess={this.onDocumentLoadSuccess} options={options}>
-                        {Array.from(new Array(numPages), (el, index) => (
-                            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-                        ))}
-                    </Document>
-                )}
                 <br />
-                <button onClick={this._handleSubmit}>SUBMIT</button>
+                <button className="button" onClick={this._handleSubmit}>
+                    SUBMIT
+                </button>
+                <br />
+                <br />
+                {this.state.pdf && (
+                    <div className="document">
+                        <Document
+                            file={pdf}
+                            onLoadSuccess={this.onDocumentLoadSuccess}
+                            options={options}
+                        >
+                            {Array.from(new Array(numPages), (el, index) => (
+                                <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                            ))}
+                        </Document>
+                    </div>
+                )}
             </div>
         );
     }

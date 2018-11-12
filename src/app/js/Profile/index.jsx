@@ -7,11 +7,10 @@ class Profile extends Component {
 
         return (
             <div className="container">
-                <img src={this.props.user.profilePicture} alt="" />
-                <br />
-                {this.props.user._id}
-                <br />
-                {this.props.user.username}
+                <h1>{this.props.user.username}</h1>
+                <div className="profilePicture">
+                    <img src={this.props.user.profilePicture} alt="" />
+                </div>
             </div>
         );
     }
