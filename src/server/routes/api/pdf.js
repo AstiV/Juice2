@@ -13,7 +13,7 @@ router.post("/new", checkLoggedIn, (req, res) => {
     // const uploadedFiles = req.body;
     // console.log("Variable whatever: ", uploadedFiles);
     // console.log("REQ. BODY. PDF ", req.body.pdf);
-    // console.log("REQ FILES ", req.files);
+    console.log("REQ FILES ", req.files);
     const p = req.files && req.files.pdf ? upload(req.files.pdf) : Promise.resolve(undefined);
     p.then(fileUrl => {
         const updateData = {};
@@ -33,7 +33,5 @@ router.post("/new", checkLoggedIn, (req, res) => {
             console.error(err);
         });
 });
-
-
 
 module.exports = router;
