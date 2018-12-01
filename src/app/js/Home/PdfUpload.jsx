@@ -19,8 +19,6 @@ class PdfUpload extends Component {
 
         this._handleInputChange = this._handleInputChange.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
-
-        // console.log("STATE: ", this.state.pdf);
     }
 
     render() {
@@ -67,17 +65,19 @@ class PdfUpload extends Component {
 
     _handleSubmit(e) {
         e.preventDefault();
+
         const data = { ...this.state };
-        // console.log("DATA ", data);
-        delete data.pdf;
+        console.log("DATA ", data);
+        // delete data.pdf;
         // console.log("DATA AFTER DELETE ", data);
 
         const pdfs = this.state.pdf ? { pdf: this.state.pdf } : undefined;
-        // console.log("PDFs ", pdfs);
+
+        console.log("PDFs ", pdfs);
 
         api.post("/api/pdf/new", pdfs)
             .then(result => {
-                // console.log("RESULT ", result);
+                console.log("RESULT ", result);
                 localStorage.setItem("identity", result.token);
                 this.props.setUser();
             })
